@@ -1,39 +1,67 @@
 #!/usr/bin/env node
 
+// Spec: https://dxr.mozilla.org/mozilla-central/rev/2535bad09d720e71a982f3f70dd6925f66ab8ec7/toolkit/components/lz4/lz4.js#54
+
 var fs     = require('fs');
 var Buffer = require('buffer').Buffer;
 var LZ4    = require('lz4');
 
-function read(file) {
-  var compressed = new Buffer(fs.readFileSync(file));
-  compressed = compressed.slice(12, compressed.length);
+const MAGIC_NUMBER = new Uint8Array(
+  'mozLz40'.split('')
+    .map(function(c) { return c.charCodeAt(0); })
+    .concat([0])
+);
+const SIZE_HEADER_BYTES = 4;
 
-  var decompressedBufferSize = compressed.length * 3;
-  var decompressed;
-  var decompressedSize = -1;
-  while (decompressedSize < 0) {
-    decompressed = new Buffer(decompressedBufferSize);
-    decompressedSize = LZ4.decodeBlock(compressed, decompressed);
-    decompressedBufferSize = decompressedBufferSize * 2;
+function read(file) {
+  var compressed = Buffer.from(fs.readFileSync(file));
+
+  var sizePart = new Uint8Array(compressed)
+                  .slice(MAGIC_NUMBER.byteLength, MAGIC_NUMBER.byteLength + SIZE_HEADER_BYTES);
+  var sizeBuffer = new ArrayBuffer(SIZE_HEADER_BYTES);
+  var sizeView   = new Uint8Array(sizeBuffer);
+  for (var i = 0; i < SIZE_HEADER_BYTES; i++) {
+    sizeView[i] = sizePart[i];
   }
+  var decompressedBufferSize = new DataView(sizeBuffer).getUint32(0, true);
+
+  //console.log(compressed.slice(0, 100));
+
+  compressed = compressed.slice(MAGIC_NUMBER.byteLength + SIZE_HEADER_BYTES, compressed.length);
+  var decompressed = Buffer.alloc(decompressedBufferSize);
+  var decompressedSize = LZ4.decodeBlock(compressed, decompressed);
 
   return decompressed.slice(0, decompressedSize).toString('UTF-8');
 }
 
 function write(content, file) {
-  content = new Buffer(content);
-  var compressed = new Buffer(LZ4.encodeBound(content.length));
-  var compressedBlockSize = LZ4.encodeBlock(content, compressed);
+  content = Buffer.from(content);
+  var compressed     = new Buffer(LZ4.encodeBound(content.length));
+  var compressedSize = LZ4.encodeBlock(content, compressed);
+  compressed = compressed.slice(0, compressedSize);
 
+  var magicNumber = Buffer.from(MAGIC_NUMBER);
+
+  var size     = new ArrayBuffer(4);
+  var sizeView = new DataView(size);
+  sizeView.setUint32(0, content.byteLength, true);
+  size = Buffer.from(size);
+
+  var payload = Buffer.concat(
+    [magicNumber, size, compressed],
+    magicNumber.byteLength + size.byteLength + compressed.byteLength
+  );
+  //console.log(payload.slice(0, 100));
   if (file == '-') {
-    process.stdout.write('mozLz40\0' + compressed);
+    process.stdout.write(payload);
   }
   else {
-    fs.writeFileSync(file, 'mozLz40\0' + compressed);
+    fs.writeFileSync(file, payload);
   }
 }
 
 var source   = read(process.argv[2]);
+//console.log(source);
 var sessions = JSON.parse(source);
 sessions.windows.forEach(function(window) {
   var base = 'extension:treestyletab@piro.sakura.ne.jp';
@@ -81,5 +109,6 @@ sessions.windows.forEach(function(window) {
   });
   window.extData[base+':tree-structure'] = JSON.stringify(treeStructure);
 });
+//console.log(JSON.stringify(sessions));
 
 write(JSON.stringify(sessions), process.argv[3] || '-');
