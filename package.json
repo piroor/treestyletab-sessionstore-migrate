@@ -1,5 +1,5 @@
 {
-  "name": "treestyletab-sesssionstore-migrate",
+  "name": "treestyletab-sessionstore-migrate",
   "description": "Migrates Tree Style Tab's tree structure information embedded in sessionstore.jsonlz4.",
   "version": "1.0.0",
   "author": "YUKI \"Piro\" Hiroshi <piro.outsider.reflex@gmail.com>",
