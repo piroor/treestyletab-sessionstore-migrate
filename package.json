@@ -1,0 +1,13 @@
+{
+  "name": "treestyletab-sesssionstore-migrate",
+  "version": "1.0.0",
+  "engines": {
+    "node": ">=8.6.0"
+  },
+  "bin": {
+    "treestyletab-sesssionstore-migrate": "./migrate.js"
+  },
+  "dependencies": {
+    "lz4": ">=0.5.3"
+  }
+}
