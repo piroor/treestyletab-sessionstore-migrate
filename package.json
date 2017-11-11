@@ -5,7 +5,7 @@
   "author": "YUKI \"Piro\" Hiroshi <piro.outsider.reflex@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "git://github.com/piroor/treestyletab-sessionstore-migrator.git"
+    "url": "git://github.com/piroor/treestyletab-sessionstore-migrate.git"
   },
   "license": "MIT",
   "engines": {
