@@ -1,10 +1,6 @@
-#!/usr/bin/env node
-
-// Spec: https://dxr.mozilla.org/mozilla-central/rev/2535bad09d720e71a982f3f70dd6925f66ab8ec7/toolkit/components/lz4/lz4.js#54
-
-var fs     = require('fs');
-var Buffer = require('buffer').Buffer;
-var mozlz4a = require('mozlz4a');
+const fs     = require('fs');
+const Buffer = require('buffer').Buffer;
+const mozlz4a = require('mozlz4a');
 
 function read(file) {
   var compressed = fs.readFileSync(file);
