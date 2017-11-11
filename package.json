@@ -14,6 +14,9 @@
   "bin": {
     "treestyletab-sesssionstore-migrate": "./migrate.js"
   },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {
     "mozlz4a": ">=1.0.0"
   }
