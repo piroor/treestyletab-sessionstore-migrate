@@ -1,6 +1,13 @@
 {
   "name": "treestyletab-sesssionstore-migrate",
+  "description": "Migrates Tree Style Tab's tree structure information embedded in sessionstore.jsonlz4.",
   "version": "1.0.0",
+  "author": "YUKI \"Piro\" Hiroshi <piro.outsider.reflex@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/piroor/treestyletab-sessionstore-migrator.git"
+  },
+  "license": "MIT",
   "engines": {
     "node": ">=8.6.0"
   },
