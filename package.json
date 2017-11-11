@@ -15,6 +15,6 @@
     "treestyletab-sesssionstore-migrate": "./migrate.js"
   },
   "dependencies": {
-    "lz4": ">=0.5.3"
+    "mozlz4a": ">=1.0.0"
   }
 }
