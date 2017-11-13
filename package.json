@@ -12,7 +12,7 @@
     "node": ">=8.6.0"
   },
   "bin": {
-    "treestyletab-sessionstore-migrate": "./migrate.js"
+    "treestyletab-sessionstore-migrate": "bin/migrate.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
