@@ -1,6 +1,7 @@
 # treestyletab-sessionstore-migrate
 
-Migrates Tree Style Tab's tree structure information embedded in sessionstore.jsonlz4, from TST 0.19.x to TST 2.x.
+Migrates [Tree Style Tab](https://addons.mozilla.org/firefox/addon/tree-style-tab/)'s tree structure information embedded in sessionstore.jsonlz4, from TST 0.19.x to TST 2.x.
+For more details, see the [instruction for migration](https://github.com/piroor/treestyletab/wiki/How-to-convert-session-information-from-old-TST-0.19.x-to-new-TST-2.x).
 
 ## Install
 
