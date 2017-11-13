@@ -1,6 +1,6 @@
 # treestyletab-sessionstore-migrate
 
-Migrates Tree Style Tab's tree structure information embedded in sessionstore.jsonlz4.
+Migrates Tree Style Tab's tree structure information embedded in sessionstore.jsonlz4, from TST 0.19.x to TST 2.x.
 
 ## Install
 
