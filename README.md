@@ -21,6 +21,7 @@ This package provides only one command: `treestyletab-sessionstore-migrate`. Par
  * 1st argument: Path to the original `sessionstore.jsonlz4` file. (required)
  * 2nd argument: Path to the output file. (optional, default = stdout)
 
+Firefox writes the `sessionstore.jsonlz4` file on exit: please quit Firefox before running this program.
 
 ```bash
 $ cd ~/.mozilla/firefox/xxxxx.default/
